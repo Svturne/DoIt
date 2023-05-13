@@ -55,6 +55,11 @@ const DoIt = () => {
       return note;
     });
     setNotes(newNotes);
+    try {
+      AsyncStorage.setItem('localNotes', JSON.stringify(newNotes));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
