@@ -67,6 +67,14 @@ const NoteList = props => {
     }, 100);
   };
 
+  const handleKeyPress = ({nativeEvent}) => {
+    if (nativeEvent.key === 'Enter') {
+      TextInput.State.currentlyFocusedInput()?.setNativeProps({
+        text: '\n',
+      });
+    }
+  };
+
   return (
     <Swipeable
       ref={swipeableRef}
@@ -112,7 +120,10 @@ const NoteList = props => {
               value={desc}
               placeholder={'Aucune description...'}
               style={{borderWidth: 1, padding: 16, borderRadius: 16}}
+              multiline
+              onKeyPress={handleKeyPress}
             />
+
             <View style={{flexDirection: 'row-reverse'}}>
               <DialogButton
                 onPress={handleEditNote}
