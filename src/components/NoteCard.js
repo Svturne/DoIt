@@ -8,7 +8,9 @@ import {DialogButton} from '@rneui/base/dist/Dialog/Dialog.Button';
 const NoteList = props => {
   const [textValue, setTextValue] = useState(props.data.note);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const swipeableRef = useRef(null); // Définir la référence ici
+  const [isDescVisible, setIsDescVisible] = useState(false);
+  const [desc, setDesc] = useState(props.data.description);
+  const swipeableRef = useRef(null);
 
   const renderLeftActions = (progress, dragX) => {
     return (
@@ -47,8 +49,9 @@ const NoteList = props => {
   };
 
   const handleEditNote = () => {
-    props.onEdit(props.data.id, textValue);
+    props.onEdit(props.data.id, textValue, desc);
     setIsDialogVisible(false);
+    setIsDescVisible(false);
     setTimeout(() => {
       swipeableRef.current?.close();
     }, 100);
@@ -56,7 +59,12 @@ const NoteList = props => {
 
   const handleCancelEdit = () => {
     setTextValue(props.data.note);
+    setDesc(props.data.description);
     setIsDialogVisible(false);
+    setIsDescVisible(false);
+    setTimeout(() => {
+      swipeableRef.current?.close();
+    }, 100);
   };
 
   return (
@@ -67,7 +75,10 @@ const NoteList = props => {
       overshootLeft={false}
       overshootRight={false}>
       <View style={styles.container}>
-        <View>
+        <TouchableOpacity
+          onPress={() => {
+            setIsDescVisible(true);
+          }}>
           <Text style={styles.cardTitle}>{props.data.note}</Text>
           <Dialog isVisible={isDialogVisible}>
             <Text style={styles.titleInpute}>Modifier votre note</Text>
@@ -94,7 +105,28 @@ const NoteList = props => {
               </DialogButton>
             </View>
           </Dialog>
-        </View>
+          <Dialog isVisible={isDescVisible}>
+            <Text style={styles.titleInpute}>{textValue}</Text>
+            <TextInput
+              onChangeText={setDesc}
+              value={desc}
+              placeholder={'Aucune description...'}
+              style={{borderWidth: 1, padding: 16, borderRadius: 16}}
+            />
+            <View style={{flexDirection: 'row-reverse'}}>
+              <DialogButton
+                onPress={handleEditNote}
+                titleStyle={{color: 'green'}}>
+                Valider
+              </DialogButton>
+              <DialogButton
+                onPress={handleCancelEdit}
+                titleStyle={{color: 'red'}}>
+                Annuler
+              </DialogButton>
+            </View>
+          </Dialog>
+        </TouchableOpacity>
       </View>
     </Swipeable>
   );

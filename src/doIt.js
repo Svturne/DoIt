@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DoIt = () => {
   const [newNote, setNewNote] = useState('');
+  const [desc, setDesc] = useState('');
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -26,7 +27,11 @@ const DoIt = () => {
 
   const addTask = async () => {
     if (newNote) {
-      const newNoteData = {id: new Date().getTime().toString(), note: newNote};
+      const newNoteData = {
+        id: new Date().getTime().toString(),
+        note: newNote,
+        description: desc,
+      };
       const updatedNotes = [...notes, newNoteData];
       setNotes(updatedNotes);
       try {
@@ -47,10 +52,10 @@ const DoIt = () => {
     AsyncStorage.setItem('localNotes', JSON.stringify(filteredNotes));
   };
 
-  const onEditNote = (id, newText) => {
+  const onEditNote = (id, newText, desc) => {
     const newNotes = notes.map(note => {
       if (note.id === id) {
-        return {...note, note: newText};
+        return {...note, note: newText, description: desc};
       }
       return note;
     });
@@ -111,7 +116,7 @@ const DoIt = () => {
               key={item.id}
               data={item}
               onDelete={() => deleteNote(item.id)}
-              onEdit={(id, newText) => onEditNote(id, newText)}
+              onEdit={(id, newText, desc) => onEditNote(id, newText, desc)}
             />
           ))}
         </View>
