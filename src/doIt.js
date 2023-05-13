@@ -29,7 +29,6 @@ const DoIt = () => {
       const newNoteData = {id: new Date().getTime().toString(), note: newNote};
       const updatedNotes = [...notes, newNoteData];
       setNotes(updatedNotes);
-      console.log(updatedNotes);
       try {
         await AsyncStorage.setItem('localNotes', JSON.stringify(updatedNotes));
         setNewNote('');
