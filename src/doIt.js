@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Keyboard, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import CustomInput from './components/CustomInput';
 import {ScrollView} from 'react-native';
@@ -33,6 +33,7 @@ const DoIt = () => {
       try {
         await AsyncStorage.setItem('localNotes', JSON.stringify(updatedNotes));
         setNewNote('');
+        Keyboard.dismiss();
       } catch (e) {
         console.error(e);
       }
@@ -66,7 +67,13 @@ const DoIt = () => {
           onChangeText={setNewNote}
           secure={false}
         />
-        <Icon raised name="bookmark" type="entypo" onPress={addTask} />
+        <Icon
+          raised
+          name="post-add"
+          type="material"
+          size={30}
+          onPress={addTask}
+        />
       </View>
       <ScrollView keyboardShouldPersistTaps="handled" style={{padding: 16}}>
         <View

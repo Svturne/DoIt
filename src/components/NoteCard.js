@@ -13,16 +13,17 @@ const NoteList = props => {
   const renderLeftActions = (progress, dragX) => {
     return (
       <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          backgroundColor: 'blue',
-          padding: 20,
-          marginVertical: 10,
-          width: '100%',
-          borderRadius: 10,
-        }}
+        style={styles.edite}
         onPress={() => setIsDialogVisible(true)}>
-        <Text style={{color: 'white', textAlign: 'center'}}>Edit</Text>
+        <Text
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 20,
+            textAlign: 'center',
+          }}>
+          Modifier
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -30,16 +31,17 @@ const NoteList = props => {
   const renderRightActions = (progress, dragX) => {
     return (
       <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          backgroundColor: 'red',
-          padding: 20,
-          marginVertical: 10,
-          width: '100%',
-          borderRadius: 10,
-        }}
+        style={styles.delete}
         onPress={() => props.onDelete(props.data.id)}>
-        <Text style={{color: 'white', textAlign: 'center'}}>Delete</Text>
+        <Text
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 20,
+            textAlign: 'center',
+          }}>
+          Supprimer
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -68,14 +70,29 @@ const NoteList = props => {
         <TouchableOpacity>
           <Text style={styles.cardTitle}>{props.data.note}</Text>
           <Dialog isVisible={isDialogVisible}>
-            <Text>Modifier votre note</Text>
+            <Text style={styles.titleInpute}>Modifier votre note</Text>
             <TextInput
-              style={{backgroundColor: 'white', marginBottom: 10}}
+              style={{
+                backgroundColor: 'white',
+                marginBottom: 10,
+                backgroundColor: 'grey',
+                borderRadius: 10,
+              }}
               value={textValue}
               onChangeText={setTextValue}
             />
-            <DialogButton onPress={handleEditNote}>Valider</DialogButton>
-            <DialogButton onPress={handleCancelEdit}>Annuler</DialogButton>
+            <View style={{flexDirection: 'row-reverse'}}>
+              <DialogButton
+                onPress={handleEditNote}
+                titleStyle={{color: 'green'}}>
+                Valider
+              </DialogButton>
+              <DialogButton
+                onPress={handleCancelEdit}
+                titleStyle={{color: 'red'}}>
+                Annuler
+              </DialogButton>
+            </View>
           </Dialog>
         </TouchableOpacity>
       </View>
@@ -106,6 +123,29 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     color: 'white',
+  },
+  delete: {
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    padding: 20,
+    marginVertical: 10,
+    width: '100%',
+    borderRadius: 10,
+  },
+  edite: {
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+    padding: 20,
+    marginVertical: 10,
+    width: '100%',
+    borderRadius: 10,
+  },
+  titleInpute: {
+    textAlign: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+    paddingVertical: 10,
   },
 });
 
