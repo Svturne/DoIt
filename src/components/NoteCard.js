@@ -119,7 +119,13 @@ const NoteList = props => {
               onChangeText={setDesc}
               value={desc}
               placeholder={'Aucune description...'}
-              style={{borderWidth: 1, padding: 16, borderRadius: 16}}
+              placeholderTextColor={'grey'}
+              style={{
+                borderWidth: 1,
+                padding: 16,
+                borderRadius: 16,
+                color: 'black',
+              }}
               multiline
               onKeyPress={handleKeyPress}
             />
