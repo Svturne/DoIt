@@ -1,4 +1,4 @@
-import {Keyboard, StyleSheet, Text, View} from 'react-native';
+import {Alert, Keyboard, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import CustomInput from './components/CustomInput';
 import {ScrollView} from 'react-native';
@@ -37,6 +37,8 @@ const DoIt = () => {
       } catch (e) {
         console.error(e);
       }
+    } else {
+      Alert.alert('Champ vide', 'Veuillez saisir votre note');
     }
   };
 
@@ -58,7 +60,7 @@ const DoIt = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Do It Now</Text>
+      <Text style={styles.title}>Do it</Text>
 
       <View style={styles.newNote}>
         <CustomInput
@@ -76,6 +78,28 @@ const DoIt = () => {
         />
       </View>
       <ScrollView keyboardShouldPersistTaps="handled" style={{padding: 16}}>
+        {(() => {
+          if (notes.length === 0) {
+            return (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    color: 'black',
+                    padding: 20,
+                  }}>
+                  Vous n'avez aucune note pour l'instant
+                </Text>
+              </View>
+            );
+          }
+        })()}
         <View
           style={{flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 50}}>
           {notes.map(item => (
