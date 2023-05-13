@@ -67,7 +67,7 @@ const NoteList = props => {
       overshootLeft={false}
       overshootRight={false}>
       <View style={styles.container}>
-        <TouchableOpacity>
+        <View>
           <Text style={styles.cardTitle}>{props.data.note}</Text>
           <Dialog isVisible={isDialogVisible}>
             <Text style={styles.titleInpute}>Modifier votre note</Text>
@@ -94,7 +94,7 @@ const NoteList = props => {
               </DialogButton>
             </View>
           </Dialog>
-        </TouchableOpacity>
+        </View>
       </View>
     </Swipeable>
   );
